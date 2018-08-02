@@ -1,0 +1,103 @@
+FORMAT: 1A
+
+# Shipments
+
+Shipments is an api for viewing and managing Shipments
+
+## Group Shipments
+
+Resources related to shipments.
+
+### Shipments collection [/shipments]
+
+#### List all shipments [GET]
+
+Retreives all shipments accessible by the currently logged in user
+
++ Response 200 (application/json)
+
+    + Attributes (Shipment, required)
+
+#### Create a new shipment [POST]
+
++ Request (application/json)
+
+    + Attributes (Shipment, required)
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /shipments/5ce1c151-ad7d-5799-a2bb-b9340c1515bb
+    
+    + Attributes (Shipment, required)
+
+### Shipment [/shipments/{shipmentId}]
+
++ Parameters
+    + shipmentId: `9437ff67-c2f7-5dc5-989c-4f814644415d` (string, required) - ID of the shipment as a uuid
+
+#### Get a single shipment [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (Shipment, required)
+
+### Document [/shipment/{shipmentId}/documents/{documentId}]
+
++ Parameters
+    + shipmentId: `68de1ba5-8565-507b-abb5-7209d27fc1c8` (string, required) - ID of the shipment as a uuid
+    + documentId: `c89766d1-33d5-5159-8f88-387e1cc19252` (string, required) - ID of the document as a uuid    
+
+#### Get a single document [GET]
+
++ Response 200 (application/json)
+
+    + Attributes (Document, required)
+
+#### Add a document to a shipment [POST]
+
++ Request (application/json)
+
+    + Attributes (Document, required)
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /shipment/{shipmentId}/document/{documentId}
+
+    + Attributes (Document)
+
+# Data Structures
+
+## Document (object)
+
++ id: `59bb8eb3-591e-5131-9d48-443cfe64310e` (optional) - uuid
++ title: Bill of Lading (required) - should be the type of document
++ lastModified: `2017-10-18T23:38:11.889Z` (optional) - RFC3339 timestamp
++ blob (optional) - base64 encoded string of the document
+
+## Workflow (object)
+
++ steps (array, required)
+    + (object)
+        + name: Upload documents (required) - the title of the step to complete
+        + actor: Distributor (required) - the actor required to complete this step
+        + completedAt: `2017-10-18T23:38:11.889Z` (optional) - RFC3339 timestamp of when the step was completed
++ currentStep: 0 (number, required) - the index of the current step in the process
+
+## Shipment (object)
+
++ id: `59bb8eb3-591e-5131-9d48-443cfe64310e` (optional) - uuid
++ salesContractId: `0d19637c-fc36-500c-8fb1-6cdbc669810a` (required) - uuid of the sales contract this shipment was created for
++ customerName: FFM BERHAD (required)
++ tonnage: 16000 (number, required)
++ pricePerTon: 250.00 (number, required) - currency is assumed to be USD
++ shippingPeriod (object)
+    + start: `2017-10-12T23:38:11.889Z` (required)
+    + end: `2017-11-12T23:38:11.889Z` (required)
++ dischargePort: `Bresik, Indonesia` (required) - where the shipment is being delivered to
++ quality: 10.5% (required) - an industry identifier for grain quality
++ documents (array[Document], optional) - an array of supporting documents for the shipment
++ workflow (Workflow, optional)

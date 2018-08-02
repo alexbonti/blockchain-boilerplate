@@ -1,0 +1,10 @@
+.build-image
+.pull-tag-images
+.clone-fabric
+chaincode/chaincode
+portal/server/conf/sample-network/bin
+portal/server/keystores
+
+# misc
+.DS_Store
+.idea

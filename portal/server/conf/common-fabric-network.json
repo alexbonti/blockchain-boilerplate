@@ -1,0 +1,104 @@
+{
+    "channels": [{
+        "name": "mychannel",
+        "tx": "./sample-network/channel-artifacts/channel.tx",
+        "orderer": "orderer.example.com:7050",
+        "peers": [
+            "peer0.org1.example.com:7051",
+            "peer1.org1.example.com:7051",
+            "peer0.org2.example.com:7051",
+            "peer1.org2.example.com:7051"
+        ],
+        "chaincode": [{
+            "path": "github.ibm.com/aur/node-blockchain-boilerplate/chaincode",
+            "id": "examplecc",
+            "version": "v0",
+            "endorsementPolicy": "4-orgs",
+            "instantiate": {
+                "fcn": "init",
+                "args": ["a", "100", "b", "200"]
+            }
+        }]
+    }],
+    "chaincode": [{
+        "id": "examplecc",
+        "version": "v0",
+        "path": "github.ibm.com/aur/node-blockchain-boilerplate/chaincode"
+    }],
+    "endorsementPolicy": {
+        "4-orgs": {
+            "identities": [{
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org1MSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org2MSP"
+                    }
+                }
+            ],
+            "policy": {
+                "4-of": [{
+                        "signed-by": 0
+                    },
+                    {
+                        "signed-by": 0
+                    },
+                    {
+                        "signed-by": 1
+                    },
+                    {
+                        "signed-by": 1
+                    }
+                ]
+            }
+        }
+    },
+    "organizations": [{
+            "mspId": "OrdererMSP",
+            "tlsca": "./sample-network/crypto-config/ordererOrganizations/example.com/tlsca/tlsca.example.com-cert.pem",
+            "peers": [{
+                "type": "orderer",
+                "url": "grpcs://orderer.example.com:7050",
+                "server-hostname": "orderer.example.com"
+            }]
+        },
+        {
+            "mspId": "Org1MSP",
+            "tlsca": "./sample-network/crypto-config/peerOrganizations/org1.example.com/tlsca/tlsca.org1.example.com-cert.pem",
+            "peers": [{
+                    "type": "endorserValidator",
+                    "requests": "grpcs://peer0.org1.example.com:7051",
+                    "events": "grpcs://peer0.org1.example.com:7053",
+                    "server-hostname": "peer0.org1.example.com"
+                },
+                {
+                    "type": "endorserValidator",
+                    "requests": "grpcs://peer1.org1.example.com:7051",
+                    "events": "grpcs://peer1.org1.example.com:7053",
+                    "server-hostname": "peer1.org1.example.com"
+                }
+            ]
+        },
+        {
+            "mspId": "Org2MSP",
+            "tlsca": "./sample-network/crypto-config/peerOrganizations/org2.example.com/tlsca/tlsca.org2.example.com-cert.pem",
+            "peers": [{
+                    "type": "endorserValidator",
+                    "requests": "grpcs://peer0.org2.example.com:7051",
+                    "events": "grpcs://peer0.org2.example.com:7053",
+                    "server-hostname": "peer0.org2.example.com"
+                },
+                {
+                    "type": "endorserValidator",
+                    "requests": "grpcs://peer1.org2.example.com:7051",
+                    "events": "grpcs://peer1.org2.example.com:7053",
+                    "server-hostname": "peer1.org2.example.com"
+                }
+            ]
+        }
+    ]
+}

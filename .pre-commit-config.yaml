@@ -1,0 +1,21 @@
+- repo: git://github.com/dnephin/pre-commit-golang
+  sha: 471a7c1
+  hooks:
+    - id: go-fmt
+      exclude: (proto/.*.go$|vendor/.*.go$)
+    - id: go-vet
+      exclude: (proto/.*.go$|vendor/.*.go$)
+    - id: go-lint
+      exclude: (proto/.*.go$|vendor/.*.go$)
+- repo: local
+  hooks:
+    - id: eslint-portal
+      name: eslint-portal
+      entry: bash -c 'echo "$@" | grep "^portal\/" | xargs -n 1 | cut -d'/' -f2- | xargs npm run eslint --prefix ./portal' --
+      language: system
+      files: \.mjs$|\.js$
+    - id: eslint-deploy
+      name: eslint-deploy
+      entry: bash -c 'echo "$@" | grep "^deploy\/" | xargs -n 1 | cut -d'/' -f2- | xargs npm run eslint --prefix ./deploy' --
+      language: system
+      files: \.mjs$|\.js$

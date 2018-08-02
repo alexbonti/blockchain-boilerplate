@@ -1,0 +1,96 @@
+{
+    "channels": [{
+        "name": "mychannel",
+        "tx": "./sample-network/channel-artifacts/channel.tx",
+        "orderer": "localhost:7050",
+        "peers": [
+            "localhost:7051",
+            "localhost:8051",
+            "localhost:17051",
+            "localhost:18051"
+        ],
+        "chaincode": [{
+            "path": "github.ibm.com/aur/node-blockchain-boilerplate/chaincode",
+            "id": "examplecc",
+            "version": "v0",
+            "endorsementPolicy": "4-orgs",
+            "instantiate": {
+                "fcn": "init",
+                "args": ["a", "100", "b", "200"]
+            }
+        }]
+    }],
+    "chaincode": [{
+        "id": "examplecc",
+        "version": "v0",
+        "path": "github.ibm.com/aur/node-blockchain-boilerplate/chaincode"
+    }],
+    "endorsementPolicy": {
+        "4-orgs": {
+            "identities": [{
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org1MSP"
+                    }
+                },
+                {
+                    "role": {
+                        "name": "member",
+                        "mspId": "Org2MSP"
+                    }
+                }
+            ],
+            "policy": {
+                "4-of": [{
+                        "signed-by": 0
+                    },
+                    {
+                        "signed-by": 0
+                    },
+                    {
+                        "signed-by": 1
+                    },
+                    {
+                        "signed-by": 1
+                    }
+                ]
+            }
+        }
+    },
+    "organizations": [{
+            "mspId": "OrdererMSP",
+            "peers": [{
+                "type": "orderer",
+                "url": "grpc://localhost:7050"
+            }]
+        },
+        {
+            "mspId": "Org1MSP",
+            "peers": [{
+                    "type": "endorserValidator",
+                    "requests": "grpc://localhost:7051",
+                    "events": "grpc://localhost:7053"
+                },
+                {
+                    "type": "endorserValidator",
+                    "requests": "grpc://localhost:8051",
+                    "events": "grpc://localhost:8053"
+                }
+            ]
+        },
+        {
+            "mspId": "Org2MSP",
+            "peers": [{
+                    "type": "endorserValidator",
+                    "requests": "grpc://localhost:17051",
+                    "events": "grpc://localhost:17053"
+                },
+                {
+                    "type": "endorserValidator",
+                    "requests": "grpc://localhost:18051",
+                    "events": "grpc://localhost:18053"
+                }
+            ]
+        }
+    ]
+}

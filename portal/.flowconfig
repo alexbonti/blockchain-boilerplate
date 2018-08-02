@@ -1,0 +1,28 @@
+[options]
+module.name_mapper='^~/\(.*\)$' -> '<PROJECT_ROOT>/app/src/\1'
+module.name_mapper='^~assets/\(.*\)$' -> '<PROJECT_ROOT>/app/public/assets/\1'
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+esproposal.export_star_as=enable
+esproposal.decorators=ignore
+
+suppress_type=$FlowFixMe
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe
+
+unsafe.enable_getters_and_setters=true
+
+[ignore]
+.*/node_modules/jss/lib/.*\.js\.flow
+.*/node_modules/protobufjs/.*
+.*/node_modules/react-swipeable-views/.*
+.*/node_modules/react-swipeable-views-utils/.*
+.*/node_modules/material-ui/test-utils
+
+.*/node_modules/material-ui/utils/.*\.js\.flow
+.*/node_modules/material-ui/Tabs/.*\.js\.flow
+.*/node_modules/material-ui/Select/.*\.js\.flow
+.*/node_modules/material-ui/RadioGroup/.*\.js\.flow
+.*/node_modules/material-ui/Radio/.*\.js\.flow
+.*/node_modules/material-ui/Menu/.*\.js\.flow
+.*/node_modules/material-ui/Form/.*\.js\.flow
+.*/node_modules/material-ui/Dialog/.*\.js\.flow

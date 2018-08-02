@@ -1,0 +1,13 @@
+{
+    "mspId": "Org2MSP",
+    "users": [{
+        "role": "admin",
+        "username": "admin",
+        "keystore": "./sample-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/keystore",
+        "signcerts": "./sample-network/crypto-config/peerOrganizations/org2.example.com/users/Admin@org2.example.com/msp/signcerts"
+    }],
+    "peers": ["peer0.org2.example.com:7051", "peer1.org2.example.com:7051"],
+    "host": "app.org1.example.com",
+    "ca": "https://ca.org2.example.com:7054",
+    "leader": false
+}

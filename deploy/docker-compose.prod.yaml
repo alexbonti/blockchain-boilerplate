@@ -1,0 +1,34 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+services:
+  app.org1.example.com:
+    container_name: app.org1.example.com
+    image: node-blockchain-boilerplate
+    networks:
+      - byfn
+    environment:
+      - ORG=org1
+      - NODE_ENV=production
+    command: npm run serve
+    ports:
+        - 3000:3000
+    volumes:
+        - ../chaincode:/go/src/github.ibm.com/aur/node-blockchain-boilerplate/chaincode
+
+  app.org2.example.com:
+    container_name: app.org2.example.com
+    image: node-blockchain-boilerplate
+    networks:
+      - byfn
+    environment:
+      - ORG=org2
+      - NODE_ENV=production
+    command: npm run serve
+    ports:
+        - 13000:3000
+    volumes:
+        - ../chaincode:/go/src/github.ibm.com/aur/node-blockchain-boilerplate/chaincode
